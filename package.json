@@ -1,0 +1,34 @@
+{
+  "name": "honk",
+  "version": "0.0.0",
+  "description": "Package manager for browser based JavaScript ES6+",
+  "bin": {
+    "honk": "dist/CommandLine.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lookfirst/honk"
+  },
+  "keywords": [
+    "ES6",
+    "JavaScript",
+    "browser",
+    "package manager"
+  ],
+  "author": "Jon Stevens <latchkey@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lookfirst/honk/issues"
+  },
+  "homepage": "https://github.com/lookfirst/honk",
+  "dependencies": {
+    "npm-remote-ls": "^1.2.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-helpers": "^1.2.6"
+  }
+}
