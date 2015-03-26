@@ -6,7 +6,7 @@
     "honk": "dist/CommandLine.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --compilers js:espower-babel/guess test/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -27,10 +27,15 @@
   "dependencies": {
     "babel-runtime": "^4.7.16",
     "commander": "^2.7.1",
+    "lodash": "^3.6.0",
+    "npm-package-arg": "^3.1.1",
     "npm-remote-ls": "^1.2.1"
   },
   "devDependencies": {
+    "espower-babel": "^1.4.0",
     "gulp": "^3.8.11",
-    "gulp-helpers": "^1.2.9"
+    "gulp-helpers": "^1.2.9",
+    "mocha": "^2.2.1",
+    "power-assert": "^0.10.2"
   }
 }
