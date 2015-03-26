@@ -3,6 +3,7 @@
 
 class CommandLine {
 	constructor() {
+		console.log('here!');
 	}
 }
 
