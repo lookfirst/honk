@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-var commander = require('commander');
-var version = require('../package.json').version;
+import commander from 'commander';
+import {version} from '../package.json';
 
-var Installer = require('./Installer');
+import Installer from './Installer';
 
 class CommandLine {
 	constructor(argv) {

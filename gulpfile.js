@@ -8,7 +8,8 @@ var path = {
 	watch: 'src/**'
 };
 
-taskMaker.defineTask('es6', {taskName: 'es6', src: path.source, dest: path.output, compilerOptions: {externalHelpers: false, optional: ["runtime"]}});
-taskMaker.defineTask('watch', {taskName: 'watch', src: path.watch, tasks: ['es6'], taskDeps: ['es6']});
+taskMaker.defineTask('clean', {taskName: 'clean', src: path.output});
+taskMaker.defineTask('babel', {taskName: 'babel', src: path.source, dest: path.output, compilerOptions: {externalHelpers: false, optional: ['runtime']}});
+taskMaker.defineTask('watch', {taskName: 'watch', src: path.watch, tasks: ['babel'], taskDeps: ['babel']});
 
-gulp.task('default', ['watch']);
+gulp.task('default', ['clean', 'watch']);

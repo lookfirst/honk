@@ -1,9 +1,10 @@
-let path = require('path');
-let _ = require('lodash');
+import path from 'path';
+import _ from 'lodash';
 
-let DependencyUtils = require('./DependencyUtils');
-let NpmRepository = require('./NpmRepository');
-let GithubRepository = require('./GithubRepository');
+import log from './Log';
+import DependencyUtils from './DependencyUtils';
+import NpmRepository from './NpmRepository';
+import GithubRepository from './GithubRepository';
 
 let du = new DependencyUtils();
 let npmRepo = new NpmRepository();
@@ -16,7 +17,11 @@ export default class Installer {
 		if (pkg) {
 			this.processPackage();
 		} else {
-			this.processPackageJson();
+			this.processPackageJson().then((result) => {
+				log.info(result);
+			}).catch((error) => {
+				log.error(error);
+			});
 		}
 	}
 
@@ -24,15 +29,38 @@ export default class Installer {
 		return require(path.resolve(process.cwd(), 'package.json'));
 	}
 
+	/**
+	 * @returns Promise
+	 */
 	processPackageJson() {
 		var packageJson = this.loadPackageJson();
+		let dependencies = this.gatherDependencies(packageJson);
+
+		let grouped = du.groupByRepository(dependencies);
+
+		this.npmInstall(grouped.npm).then((result) => {
+			npmRepo.buildDirectoryStructure(result);
+		});
+
+		return Promise.resolve();
+	}
+
+	npmInstall(dependencies) {
+		return npmRepo.getDependencies(dependencies).then((result) => {
+			return npmRepo.install(result.dependencies);
+		});
+	}
+
+	/**
+	 * This is where we build the dependencies objects. Right now,
+	 * just looking at honk dependencies in package.json
+	 */
+	gatherDependencies(packageJson) {
+		let dependencies = {};
 		if (packageJson.honk && packageJson.honk.dependencies) {
-			let dependencies = packageJson.honk.dependencies;
-
-			let grouped = du.groupByRepository(dependencies);
-
-			npmRepo.buildDependencyTree(grouped['npm']);
+			dependencies = packageJson.honk.dependencies;
 		}
+		return dependencies;
 	}
 
 	processPackage() {
