@@ -12,3 +12,13 @@ A couple other ideas I’ve come up with for consideration are:
 1. for repositories, use their existing mechanisms for download / install. for instance, effectively `npm install` packages to node_modules and then copy from there. this prevents the system from having to manage downloading, caching or worry about configuring npm. same will be true for bower and github and whatever else comes along.
 
 1. use gulp tasks programatically for moving files around. it is already really good at globbing and such, might as re-use the code. this also means that transforming the code in node_modules into jspm_packages could be done as a gulp plugin instead. it would encourage a cleaner api because the plugin could just use that api.
+
+1. all configuration goes into `package.json`:`honk: {}` and is then resolved into a `systemjs.config.js` file. it is one direction and immutable. this means we only need `honk install` and it will always overwrite what is in the `config.js` file.
+
+# Status
+
+1. npm dependency resolution is started and mostly working. `honk install` will read the dependnencies, populate the node_modules folder and then copy the files into a honk_packages folder.
+
+# Todo
+
+1. build a gulp plugin that does the transformation of the code in node_modules -> honk_packages.
